@@ -36,6 +36,12 @@ public class TextBoxManager : MonoBehaviour {
         {
             currentLine += 1;
         }
+        if (currentLine == 13)
+        {
+            Application.LoadLevel(2);
+        }
+
+        //TODO: Go to next level once text is finished.
     }
 
 }

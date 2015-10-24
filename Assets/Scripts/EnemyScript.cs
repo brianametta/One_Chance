@@ -6,12 +6,12 @@ using System.Collections.Generic;
 public class EnemyScript : MonoBehaviour
 {
     Animator fighting;
+    Animator die;
     private float distance;
     public float speed = 0.5f;
     public float health = 10;
     public GameObject Player;
 
-    private float _maxHealth;
     public Vector3 walkTarget;
     public bool walking;
     public Transform characterTrans;
@@ -21,19 +21,20 @@ public class EnemyScript : MonoBehaviour
     void Awake()
     {
         characterTrans = transform.Find("CharacterTrans");
-        _maxHealth = health; //Puts a top cap on healing
     }
 
     void Start()
     {
         Briana = GetComponent<Rigidbody2D>();
         fighting = GetComponent<Animator>();
+        die = GetComponent<Animator>();
     }
 
     void Update()
     {
         WalkTo(Player.transform.position);
     }
+
     //Walk to a position
     public void WalkTo(Vector3 xTarget)
     {
@@ -42,28 +43,30 @@ public class EnemyScript : MonoBehaviour
         walking = true;
        
     }
+
     void FixedUpdate()
     {
         Briana.velocity = (walkTarget - Briana.transform.position) * speed;
 
-        fighting.SetFloat("Distance", distance);
-
         distance = Briana.transform.position.x - walkTarget.x;
 
-        if (distance <= 0.01)
-        {
-            
-        }
-    }
-    void OnTriggerCollider(Collider TriggerObject)
-    {
+        fighting.SetFloat("WalkingSpeed", Briana.velocity.x);
 
-        health -= 1;
+        fighting.SetFloat("Distance", distance);
     }
-    public void Damage(float amt, bool damageOverTime = false)
-    {
-        //Collision
-        //Decrease Health
-        //void Die()
+
+    public void OnCollisionEnter2D(Collision2D TriggerObject)
+    { 
+        if(TriggerObject.gameObject.tag == "Player")
+        {
+            health -= 1;
+            Debug.Log("Getting Hurt");
+        }
+
+       if(health <= 0)
+        {
+            die.SetTrigger("Death");
+            Destroy(Briana);
+        }
     }
 }
