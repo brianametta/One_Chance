@@ -9,7 +9,7 @@ public class EnemyScript : MonoBehaviour
     Animator die;
     private float distance;
     public float speed = 0.5f;
-    public float health = 10;
+    public float health = 5;
     public GameObject Player;
 
     public Vector3 walkTarget;
@@ -60,13 +60,13 @@ public class EnemyScript : MonoBehaviour
         if(TriggerObject.gameObject.tag == "Player")
         {
             health -= 1;
-            Debug.Log("Getting Hurt");
         }
 
        if(health <= 0)
         {
             die.SetTrigger("Death");
             Destroy(Briana);
+            Destroy(gameObject);
         }
     }
 }
