@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 //Code from Horrible Game by Haval Ahmed
 public class LoadCreditLevel : MonoBehaviour
 {

@@ -10,7 +10,7 @@ public class TextImporter : MonoBehaviour {
 
     void Start () {
         if (textFile != null)
-        {
+        {   //Split lines at returns
             textLines = (textFile.text.Split('\n'));
         }        
 	}

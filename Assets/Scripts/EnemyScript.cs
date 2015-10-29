@@ -9,7 +9,7 @@ public class EnemyScript : MonoBehaviour
     Animator die;
     private float distance;
     public float speed = 0.5f;
-    public float health = 5;
+    public float health = 2;
     public GameObject Player;
 
     public Vector3 walkTarget;
@@ -22,14 +22,14 @@ public class EnemyScript : MonoBehaviour
     {
         characterTrans = transform.Find("CharacterTrans");
     }
-
+    //Get animations for death and fighting, set enemy under Briana
     void Start()
     {
         Briana = GetComponent<Rigidbody2D>();
         fighting = GetComponent<Animator>();
         die = GetComponent<Animator>();
     }
-
+    //Enemy Briana walks to Player
     void Update()
     {
         WalkTo(Player.transform.position);
@@ -43,7 +43,7 @@ public class EnemyScript : MonoBehaviour
         walking = true;
        
     }
-
+    //Set velocity and distance for walking toward player AI
     void FixedUpdate()
     {
         Briana.velocity = (walkTarget - Briana.transform.position) * speed;
@@ -57,11 +57,12 @@ public class EnemyScript : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D TriggerObject)
     { 
+        //If player hits enemy, decrease health
         if(TriggerObject.gameObject.tag == "Player")
         {
             health -= 1;
         }
-
+        //If health is zero, kill enemy
        if(health <= 0)
         {
             die.SetTrigger("Death");

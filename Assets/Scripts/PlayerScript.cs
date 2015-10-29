@@ -18,12 +18,14 @@ public class PlayerScript : MonoBehaviour
         characterTrans = transform.Find("CharacterTrans");
     }
 
+    //Get rigidbody and defending animation
     void Start()
     {
         Player = GetComponent<Rigidbody2D>();
         defending = GetComponent<Animator>();
     }
 
+    //Thrust sword when mouse is clicked
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
